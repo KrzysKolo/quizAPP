@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import QuestionCard from './components/QuestionCard';
-import Loading from './components/Loading';
 import { fetchQuizQuestions } from './API';
 import { QuestionState, Difficulty } from './API';
 import { GlobalStyle, Wrapper } from './App.style';
@@ -64,35 +63,34 @@ const App = () => {
     }
 
   };
-   return (
+
+  return (
     <>
       <GlobalStyle />
-      <Wrapper>
-        <section className="header">
-          <h1>QUIZ APP</h1>
-        </section>
+    <div>
+      <h1>REACT QUIZ</h1>
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <button className="start" onClick={startTrivia}>
           Start
         </button>
       ): null}
-        {!gameOver ? <p className="score">Score: {score} </p> : null}
-        { loading && <Loading/>  }
-        { !loading && !gameOver && (<QuestionCard
+      { !gameOver ? <p className="score">Score: {score} </p> : null}
+      { loading && <p >Loading Questions... </p>  }
+      { !loading && !gameOver && (<QuestionCard
         questionNr={number + 1}
-        totalQuestions={TOTAL_QUESTIONS}
+        totalGuestions={TOTAL_QUESTIONS}
         question={questions[number].question}
         answers={questions[number].answers}
         userAnswer={userAnswers ? userAnswers[number] : undefined}
         callback={checkAnswer}
 
       />)}
-        {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
+      {!gameOver && !loading && userAnswers.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? (
           <button className='next' onClick={nextQuestion}>
             Next Question
           </button>
         ) : null}
-      </Wrapper>
+      </div>
       </>
   )
 }
